@@ -11,7 +11,11 @@ import SwiftUI
 struct uni_connectApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabsView()
         }
     }
+}
+
+#Preview {
+    TabsView()
 }
