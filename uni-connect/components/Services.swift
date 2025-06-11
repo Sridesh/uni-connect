@@ -24,7 +24,7 @@ struct Services: View {
     var body:some View{
         Section(){
             VStack(alignment: .leading){
-              Text("Services").font(.headline)
+              Text("Services provided by the auditorium facility").font(.headline)
                 ForEach(serviceData){
                     item in
                     HStack{
@@ -38,11 +38,11 @@ struct Services: View {
         
         Section(){
             VStack(alignment: .leading){
-              Text("Facilities").font(.headline)
+              Text("Facilities avaialable").font(.headline)
                 ForEach(serviceData){
                     item in
                     HStack{
-                        Image(systemName: item.icon).foregroundColor(.green)
+                        Image(systemName: item.icon).foregroundColor(.green).frame(width: 50)
                         Text(item.title)
                     }.frame(maxWidth: .infinity, alignment: .leading).padding()
                     Divider()
