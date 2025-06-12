@@ -1,45 +1,36 @@
-//
-//  Test.swift
-//  uni-connect
-//
-//  Created by Sridesh 001 on 2025-06-09.
-//
-
 import SwiftUI
 
-struct ConfirmEraseItems: View {
-    @State private var showSheet = false
-        @State private var isOn = false
+struct ClickableImageHotspots: View {
+    var body: some View {
+        ZStack {
+            // Your base image
+            Image("hall1") // Replace with your image name
+                .resizable()
+                .scaledToFit()
 
-        var body: some View {
-            VStack {
-                Button("Show Toggle Sheet") {
-                    showSheet = true
+            // Example hotspot #1
+            Circle()
+                .fill(Color.red.opacity(0.7))
+                .frame(width: 30, height: 30)
+                .position(x: 100, y: 150) // Coordinates relative to the image
+                .onTapGesture {
+                    print("Hotspot 1 tapped")
+                    // Trigger action here
                 }
-            }
-            .sheet(isPresented: $showSheet) {
-                VStack {
-                    Text("Settings")
-                        .font(.headline)
-                        .padding()
 
-                    Toggle("Enable Feature", isOn: $isOn)
-                        .padding()
-
-                    Button("Done") {
-                        showSheet = false
-                    }
-                    .padding(.top, 20)
-
-                    Spacer()
+            // Example hotspot #2
+            Circle()
+                .fill(Color.blue.opacity(0.7))
+                .frame(width: 30, height: 30)
+                .position(x: 200, y: 300)
+                .onTapGesture {
+                    print("Hotspot 2 tapped")
+                    // Another action
                 }
-                .padding()
-                .presentationDetents([.height(250)]) // Optional: mimic action sheet height
-            }
         }
+    }
 }
 
 #Preview {
-    ConfirmEraseItems()
+    ClickableImageHotspots()
 }
-

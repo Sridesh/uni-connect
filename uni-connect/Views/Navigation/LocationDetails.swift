@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LocationDetails: View {
     @State private var shown = true
-    @State private var selected = 3
+    @State private var selected = 0
     
     let options = ["Overview", "Navigation", "Crowd", "Services"]
     
