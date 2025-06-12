@@ -21,9 +21,9 @@ struct NavigationHome: View {
 
     let menuItems: [MenuItem] = [
         MenuItem(title: "View Map", icon: "map", destination: AnyView(Viewmap())),
-        MenuItem(title: "Seat Reservation", icon: "square.split.2x2", destination: AnyView(SeatReservation())),
+        MenuItem(title: "Seat Reservation", icon: "square.split.2x2", destination: AnyView(Seats())),
         MenuItem(title: "PC Reservation", icon: "desktopcomputer.and.macbook", destination: AnyView(PCReservation())),
-        MenuItem(title: "View Halls", icon: "square", destination: AnyView(HallsView())),
+//        MenuItem(title: "View Halls", icon: "square", destination: AnyView(HallsView())),
         MenuItem(title: "Examinations", icon: "graduationcap", destination: AnyView(HelpView()))
     ]
 
@@ -67,7 +67,9 @@ struct NavigationHome: View {
                                 .foregroundColor(.gray)
                         } else {
                             ForEach(filteredLocations, id: \.self) { location in
-                                Text(location)
+                                NavigationLink(destination: LocationDetails()){
+                                    Text(location)
+                                }
                             }
                         }
                     }
