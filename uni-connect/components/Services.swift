@@ -18,6 +18,14 @@ let serviceData : [ServicesType] = [
     ServicesType(title: "Event Hosting", icon: "balloon")
 ]
 
+let facilitiesData: [ServicesType] = [
+    ServicesType(title:"Smart Board", icon:"inset.filled.rectangle.and.person.filled"),
+    ServicesType(title: "AC Power Supply", icon: "bolt"),
+    ServicesType(title: "Podium with screen control", icon: "music.microphone.circle"),
+    ServicesType(title: "Air Conditionning", icon: "air.conditioner.horizontal"),
+    ServicesType(title: "Collapsible Seats", icon: "figure.seated.side.right.air.distribution.upper")
+]
+
 import SwiftUI
 
 struct Services: View {
@@ -39,7 +47,7 @@ struct Services: View {
         Section(){
             VStack(alignment: .leading){
               Text("Facilities avaialable").font(.headline)
-                ForEach(serviceData){
+                ForEach(facilitiesData){
                     item in
                     HStack{
                         Image(systemName: item.icon).foregroundColor(.green).frame(width: 50)

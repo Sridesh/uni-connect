@@ -65,9 +65,10 @@ struct CrowdLevel: View {
                     Image(systemName: "calendar.badge.clock").foregroundColor(.secondary)
                         .padding(.trailing, 7)
                     
-                    Text("TSLE - COBSCCOMP24.1P").frame(maxWidth:.infinity, alignment: .leading).lineLimit(1)
+                    Text("Now").frame(maxWidth:.infinity, alignment: .leading).lineLimit(1).bold()
                     
                 }.padding(5).frame(maxWidth: .infinity, alignment: .leading)
+                Text("TSLE - COBSCCOMP24.1P").frame(maxWidth:.infinity, alignment: .leading).lineLimit(1)
                 
                 Divider()
                 
@@ -85,7 +86,7 @@ struct CrowdLevel: View {
             
             
             VStack{
-                Section(header: Text("Average Crowd levels per days").font(.headline)){
+                Section(header: Text("Average crowd levels per day").font(.headline)){
                     //Crowd weekly chart
                     Chart(data){
                         item in

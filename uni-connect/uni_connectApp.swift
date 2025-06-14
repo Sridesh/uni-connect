@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct uni_connectApp: App {
+    
+    @StateObject var session = UserSession()
+    @StateObject var bookings = Bookings()
+    
     var body: some Scene {
         WindowGroup {
             TabsView()
+                .environmentObject(session)
+                .environmentObject(bookings)
         }
     }
 }

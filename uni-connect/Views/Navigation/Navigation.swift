@@ -15,16 +15,18 @@ struct MenuItem: Identifiable {
 }
 
 struct NavigationHome: View {
+    @EnvironmentObject var session : UserSession
+    
     @State private var searchText = ""
 
     let locations = ["Harrsion Hall", "Auditorium", "Library", "Study Hall", "Lecture Hall 01", "Lecture Hall 2", "PC Lab 01", "PC Lab 02"]
 
     let menuItems: [MenuItem] = [
-        MenuItem(title: "View Map", icon: "map", destination: AnyView(Viewmap())),
-        MenuItem(title: "Seat Reservation", icon: "square.split.2x2", destination: AnyView(SeatReservation())),
-        MenuItem(title: "PC Reservation", icon: "desktopcomputer.and.macbook", destination: AnyView(PCReservation())),
-        MenuItem(title: "View Halls", icon: "square", destination: AnyView(HallsView())),
-        MenuItem(title: "Examinations", icon: "graduationcap", destination: AnyView(HelpView()))
+        MenuItem(title: "Naviagate to locations", icon: "map", destination: AnyView(Viewmap())),
+        MenuItem(title: "Seat Reservation", icon: "square.split.2x2", destination: AnyView(Seats())),
+        MenuItem(title: "PC Reservation", icon: "desktopcomputer.and.macbook", destination: AnyView(PCs())),
+//        MenuItem(title: "View Halls", icon: "square", destination: AnyView(HallsView())),
+        MenuItem(title: "Examinations", icon: "graduationcap", destination: AnyView(Exams()))
     ]
 
     var filteredLocations: [String] {
@@ -34,13 +36,17 @@ struct NavigationHome: View {
             return locations.filter { $0.localizedCaseInsensitiveContains(searchText) }
         }
     }
+    
+    var itemArr: [MenuItem] {
+        session.isLogged ? menuItems : Array(menuItems.prefix(1))
+    }
 
     var body: some View {
         NavigationStack{
             List {
                 if searchText.isEmpty {
                     Section(header: Text("Featured")) {
-                        ForEach(menuItems) { item in
+                        ForEach(itemArr) { item in
                             NavigationLink(destination: item.destination) {
                                 HStack {
                                     Image(systemName: item.icon)
@@ -67,7 +73,9 @@ struct NavigationHome: View {
                                 .foregroundColor(.gray)
                         } else {
                             ForEach(filteredLocations, id: \.self) { location in
-                                Text(location)
+                                NavigationLink(destination: LocationDetails()){
+                                    Text(location)
+                                }
                             }
                         }
                     }
@@ -88,15 +96,8 @@ struct SettingsView: View {
     }
 }
 
-struct HelpView: View {
-    var body: some View {
-        Text("Help Screen")
-            .font(.largeTitle)
-            .navigationTitle("Help")
-    }
-}
-
 #Preview {
     NavigationHome()
+        .environmentObject(UserSession())
 }
 
