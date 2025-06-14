@@ -7,21 +7,21 @@
 
 import SwiftUI
 
-let locations:[String] = [
-    "Library",
-    "Study Area",
-    "Cafetaria"
+let rooms:[String] = [
+    "PC Lab 01",
+    "PC Lab 02",
+    "IOS Lab",
+    "Network Lab"
 ]
 
-let serviceDataArr : [ServicesType] = [
-    ServicesType(title:"Access to a large number of world renown books and researches", icon:"book.fill"),
-    ServicesType(title:"Access to public PCs", icon:"laptopcomputer"),
-    ServicesType(title:"Silent place to study", icon:"speaker.slash.fill"),
-    ServicesType(title: "Conduct special lectures", icon: "graduationcap.fill")
+let servicesArr : [ServicesType] = [
+    ServicesType(title:"Access to latest Mac Computers", icon:"laptopcomputer"),
+    ServicesType(title:"Full iOS development friendly echo systems", icon:"apple.logo"),
+    ServicesType(title: "Conduct lectures", icon: "graduationcap.fill"),
 ]
 
-struct Seats: View {
-    @State private var selectedLocation:String = ""
+struct PCs: View {
+    @State private var selectedLocation:String = "IOS Lab"
     @State private var showSheet = false
     @State private var reserved = false
 
@@ -30,7 +30,7 @@ struct Seats: View {
             //has to be fixed
             ZStack(alignment: .bottom){
                 VStack(spacing: 0){
-                    CustomDropDown(selectedOption: $selectedLocation, options: locations, icon: "chair.fill", title: "Select a public area")
+                    CustomDropDown(selectedOption: $selectedLocation, options: rooms, icon: "chair.fill", title: "Select a public area")
                     if selectedLocation.isEmpty{
                         Text("Select a location above")
                             .font(.title)
@@ -38,14 +38,14 @@ struct Seats: View {
                             
                     } else {
                         ScrollView{
-                            Image("library")
+                            Image("mac")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .frame(maxWidth:.infinity, maxHeight:250)
+                                .frame(maxWidth:.infinity, maxHeight:200)
                                 .clipped()
                                 .padding(.top)
                         
-                            Text(selectedLocation)
+                                Text("IOS Lab")
                                     .font(.title)
                                     .bold()
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -61,10 +61,10 @@ struct Seats: View {
                                 
                                 Divider()
                                 
-                                Text("Moderataley Crowded")
+                                Text("Booked for lecture")
                            
                                     .bold()
-                                    .foregroundColor(.orange)
+                                    .foregroundColor(.red)
                                     .frame(maxWidth: .infinity)
                                 
                                 Divider()
@@ -93,7 +93,7 @@ struct Seats: View {
                                         .frame(width:25)
                                         .foregroundColor(.secondary)
                                     
-                                    Text("Mrs. Varuni Perera")
+                                    Text("Mr. Kithnuka Perera")
                                         .bold()
                                         .foregroundColor(.secondary)
                                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -119,7 +119,7 @@ struct Seats: View {
                                         .frame(width:25)
                                         .foregroundColor(.secondary)
                                     
-                                    Text("Mrs. Asini Jayalath")
+                                    Text("Mr. Dihan Fernando")
                                         .bold()
                                         .foregroundColor(.secondary)
                                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -148,7 +148,7 @@ struct Seats: View {
                                     .font(.headline)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 
-                                ForEach(serviceDataArr){
+                                ForEach(servicesArr){
                                     item in
                                     HStack{
                                         Image(systemName: item.icon).foregroundColor(.secondary).frame(width: 50)
@@ -168,22 +168,22 @@ struct Seats: View {
                     Button(action:{
                         showSheet = true
                     }){
-                        Text(reserved ? "View Reservation":"Reserve a seating")
+                        Text(reserved ? "View Reservation":"Reserve a device")
                     }
                     .padding(5)
                     .disabled(selectedLocation.isEmpty)
                     .sheet(isPresented: $showSheet){
-                        SeatReservation( reserved: $reserved, open: $showSheet)
+                        PCReservation( reserved: $reserved, open: $showSheet)
                     }
                 }.background(Color.white)
             }
         }
         .padding()
-        .navigationTitle("Seat Reservation")
+        .navigationTitle("PC Reservation")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
-    Seats()
+    PCs()
 }

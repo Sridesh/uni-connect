@@ -137,6 +137,10 @@ struct Viewmap: View {
                             
                         }
                         
+                        Text("Click on a location to open navigation and other details")
+                            .foregroundColor(.black.opacity(0.7))
+                            .font(.system(size: 14))
+                        
                         ZStack{
                             //                        NavigationLink(destination: LocationDetails()) {
                             //                            Image(option).aspectRatio(contentMode: .fit)
@@ -150,11 +154,17 @@ struct Viewmap: View {
                                 NavigationLink(destination: LocationDetails()) {
                                     VStack{
                                         Image(systemName: item.icon)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 24, height: 24)
                                             .padding(10)
-                                            .frame(width:40, height: 40)
                                             .background(item.color)
-                                            .cornerRadius(50)
                                             .foregroundColor(.white)
+                                            .clipShape(Circle())
+                                            .overlay(
+                                                Circle()
+                                                    .stroke(Color.white, lineWidth: 4)
+                                            )
                                         
                                         
                                         Text(item.name)
@@ -170,7 +180,7 @@ struct Viewmap: View {
                 
             }
             .padding()
-            .navigationTitle("View Map")
+            .navigationTitle("Navigate")
             .navigationBarTitleDisplayMode(.inline)
         }
     

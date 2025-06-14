@@ -1,5 +1,5 @@
 //
-//  SeatReservation.swift
+//  PCReservation.swift
 //  uni-connect
 //
 //  Created by Sridesh 001 on 2025-06-07.
@@ -9,8 +9,8 @@ import SwiftUI
 
 
 
-struct SeatReservation: View {
-    @State private var facility = "Library"
+struct PCReservation: View {
+    @State private var facility = "IOS Lab"
     @State private var seat = ""
     @State private var fullday = false
     @State private var startTime = Date()
@@ -32,7 +32,7 @@ struct SeatReservation: View {
     
     var body: some View {
         NavigationStack{
-            Text("Reserve a seat here")
+            Text("Reserve a device here")
                 .font(.title)
                 .padding()
             
@@ -45,7 +45,7 @@ struct SeatReservation: View {
                         Text("Your reservation")
                             .font(.title).bold()
                         
-                        Text("Seat: \(seat)")
+                        Text("Device: \(seat)")
                         Text("Time: \(timeFormat.string(from: startTime)) - \(fullday ? "4:30 PM" : timeFormat.string(from: endTime))")
                     }
                     VStack{
@@ -68,9 +68,18 @@ struct SeatReservation: View {
                     }.frame(maxWidth: .infinity)
                 }
                 else {
-                    CustomDropDown(selectedOption: $seat, options: ["A-1", "A-2","B-5"], icon: "square.split.2x2", title: "Select a seat")
+                    CustomDropDown(selectedOption: $seat, options: [
+                        "PCLAB04 - 01",
+                        "PCLAB04 - 04",
+                        "PCLAB04 - 05",
+                        "PCLAB04 - 07",
+                        "PCLAB04 - 08",
+                        "PCLAB04 - 09",
+                        "PCLAB04 - 10",
+                        "PCLAB04 - 12",
+                    ], icon: "desktopcomputer", title: "Select a pc")
                     
-                    Section(header:Text("Seat Availability")){
+                    Section(header:Text("Device Availability")){
                         VStack{
                             HStack{
                                 Circle()
@@ -78,7 +87,7 @@ struct SeatReservation: View {
                                     .foregroundColor(.green.opacity(0.5))
                                 Text("Available")
                                 Spacer()
-                                Text("03")
+                                Text("8")
                                     .bold()
                             }
                             Divider()
@@ -87,7 +96,7 @@ struct SeatReservation: View {
                                     .foregroundColor(.red.opacity(0.5))
                                 Text("Reserved")
                                 Spacer()
-                                Text("16")
+                                Text("5")
                                     .bold()
                             }
 
@@ -150,11 +159,11 @@ struct SeatReservation: View {
                 }
                 
             }
-        }.navigationTitle("Seat Reservation")
+        }.navigationTitle("PC Reservation")
             .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
-    SeatReservation( reserved: .constant(false) , open : .constant(true))
+    PCReservation( reserved: .constant(false) , open : .constant(true))
 }

@@ -54,6 +54,8 @@ struct Lecturers: View {
                 .bold()
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 25)
+                .foregroundColor(.blue.mix(with: .black, by: 0.3))
+                
                 LazyVGrid(columns: columns, spacing: 30) {
                     ForEach(lecturers) { item in
 

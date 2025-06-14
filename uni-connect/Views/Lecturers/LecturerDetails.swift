@@ -77,6 +77,11 @@ struct LecturerDetails:View {
                 if dateSelected  {
                     Text("You are booking a time for \(dayCon)").padding(.top)
                     
+                    Text("Select a time from below available slots")
+                        .padding(.top, 5)
+                        .foregroundColor(.secondary)
+                    
+                    
                     ScrollView{
                         ForEach(times, id: \.self){
                             item in

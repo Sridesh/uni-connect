@@ -8,6 +8,8 @@
 import SwiftUI;
 
 struct TabsView: View {
+    @EnvironmentObject var session : UserSession
+    
     @State private var selectedTab = 0
     var body: some View {
         
@@ -21,11 +23,24 @@ struct TabsView: View {
                 NavigationHome().tabItem{
                     Label("Navigation", systemImage: "location")
                 }
+                if session.isLogged {
                 
-                LecturerLanding()
-                    .tabItem{
-                        Label("Lecturers", systemImage: "person.3.fill")
-                    }
+                    LecturerLanding()
+                        .tabItem{
+                            Label("Lecturers", systemImage: "person.3.fill")
+                        }
+                    
+                }
+                
+                
+                if session.role == "lecturer" {
+                    Meetings()
+                        .tabItem{
+                            Label("Meetings", systemImage: "calendar")
+                        }
+                }
+                
+                
                 
                 Profile()
                     .tabItem {
@@ -40,6 +55,6 @@ struct TabsView: View {
 }
 
 #Preview {
-    TabsView()
+    TabsView().environmentObject(UserSession()).environmentObject(Bookings())
 }
 

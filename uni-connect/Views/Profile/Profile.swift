@@ -16,30 +16,53 @@ let options = [
 ]
 
 struct Profile: View {
+    @State private var logout = false
+    
+    @EnvironmentObject var session : UserSession
+    
+    func handleLogout(){
+        session.isLogged = false
+    }
+    
     var body: some View {
         NavigationView{
             List{
-                VStack{
-                    Image("profile")
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                        .cornerRadius(50)
-                        .padding(.vertical,0)
+                if session.isLogged{
+                    VStack{
+                        Image("profile")
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                            .cornerRadius(50)
+                            .padding(.vertical,0)
+                        
+                        Text(session.name)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .bold()
+                        
+                        
+                        Text(session.role.capitalized)
+                            .foregroundColor(.secondary)
+                        
+                        Text(session.id.uppercased())
+                            .foregroundColor(.secondary)
+                    }
                     
-                    Text("L. S. H. Fernando")
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .bold()
+                    Section(header: Text("My Actions")){
+                            ForEach(actions, id: \.self){
+                                item in
+                                HStack{
+                                    
+                                    Text(item)
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        
+                    }
                     
-                    
-                    Text("Student")
-                        .foregroundColor(.secondary)
-                    
-                    Text("COBSCCOMP241P-001")
-                        .foregroundColor(.secondary)
-                }
-                
-                Section(header: Text("My Actions")){
-                        ForEach(actions, id: \.self){
+                    Section(header: Text("Account")){
+                        ForEach(options, id: \.self){
                             item in
                             HStack{
                                 
@@ -49,32 +72,49 @@ struct Profile: View {
                                     .foregroundColor(.secondary)
                             }
                         }
-                    
-                }
-                
-                Section(header: Text("Account")){
-                    ForEach(options, id: \.self){
-                        item in
-                        HStack{
-                            
-                            Text(item)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.secondary)
-                        }
                     }
+                } else {
+                    Text("Please Login to use the Profile options")
+                        .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
                 VStack{
-                    Button("Edit Profile"){
+                    if session.isLogged {
+                        Button("Edit Profile"){
+                            
+                        }.frame(maxWidth: .infinity, alignment: .center)
                         
-                    }.frame(maxWidth: .infinity, alignment: .center)
-                    
-                    Divider()
-                    
-                    Button("Logout", role: .destructive){
+                        Divider()
                         
-                    }.frame(maxWidth: .infinity, alignment: .center)
+                        Button(role:.destructive, action:handleLogout) {
+                            Text("Logout")
+                            
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .sheet(isPresented: $logout){
+                            VStack{
+                                Login()
+                            }
+                        }
+                    }
+                    else {
+                        Button( action:{
+                            
+                            logout = !session.isLogged
+                            
+                        }) {
+                            Text("Login")
+                            
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .sheet(isPresented: $logout){
+                            VStack{
+                                Login()
+                            }
+                        }
+                    }
+
+                   
                     
                 }.frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -87,4 +127,5 @@ struct Profile: View {
 
 #Preview {
     Profile()
+        .environmentObject(UserSession())
 }

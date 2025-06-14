@@ -1,33 +1,23 @@
 //
-//  Login.swift
+//  SignUp.swift
 //  uni-connect
 //
-//  Created by Sridesh 001 on 2025-06-12.
+//  Created by Sridesh 001 on 2025-06-14.
 //
 
 import SwiftUI
 
-struct Login: View {
-    @EnvironmentObject var session : UserSession
-    
+struct SignUp: View {
     @State private var id=""
+    @State private var nic = ""
+    @State private var name = ""
+    @State private var email = ""
+    @State private var phone = ""
     @State private var password=""
     @State private var showAlert = false
     @State private var navigate = false
     
-    func handleLogin() {
-        session.isLogged = true
-        session.role = "student"
-        
-        if id == "cobsccomp241p-001" {
-            session.role = "student"
-        } else {
-            session.role = "lecturer"
-        }
-    }
-    
     var body: some View {
-        NavigationView{
             VStack{
                 VStack{
                     HStack{
@@ -49,9 +39,9 @@ struct Login: View {
                     LinearGradient(colors: [.blue, .green], startPoint: .leading, endPoint: .trailing)
                 )
                 
+                //Form part
                 VStack{
-                    
-                    Text("Login")
+                    Text("Sign Up")
                         .font(.title)
                         .bold()
                         .padding(.bottom, 20)
@@ -61,8 +51,37 @@ struct Login: View {
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
-                        .padding()
+                        .padding(.horizontal)
                     
+                    TextField("NIC", text: $nic)
+                        .autocapitalization(.none)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                    
+                    TextField("Full Name", text: $name)
+                        .autocapitalization(.none)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                    
+                    TextField("Student Email", text: $email)
+                        .keyboardType(.emailAddress)
+                        .autocapitalization(.none)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                    
+                    TextField("Mobile Number", text: $phone)
+                        .keyboardType(.phonePad)
+                        .autocapitalization(.none)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
                     
                     SecureField("Password", text: $password)
                         .padding()
@@ -71,17 +90,16 @@ struct Login: View {
                         .padding(.horizontal)
                     
                     
-                    Text("Forgot Password")
-                        .foregroundColor(.blue)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding()
-                    
-                    
                     Button(action: {
-                        if id.isEmpty || password.isEmpty {
+                        if id.isEmpty
+                            || password.isEmpty
+                            || id.isEmpty
+                            || name.isEmpty
+                            || email.isEmpty
+                            || phone.isEmpty
+                        {
                             showAlert = true
                         } else {
-                            handleLogin()
                             navigate = true
                         }
                     }) {
@@ -95,15 +113,14 @@ struct Login: View {
                     }
                     .alert("Please fill in all fields", isPresented: $showAlert) {
                         Button("OK", role: .cancel) {}
-                    }
+                    }.padding(.vertical)
                     
                     HStack{
-                        Text("Do not have an account?")
+                        Text("Already have an account?")
                             .font(.headline)
-                        NavigationLink(destination: SignUp()){
-                            
-                            
-                            Text("Sign Up")
+                        
+                        NavigationLink(destination: Login()){
+                            Text("Login")
                                 .foregroundColor(.blue)
                                 .font(.headline)
                             
@@ -115,10 +132,8 @@ struct Login: View {
                     .frame(maxHeight: .infinity)
             }.frame(maxHeight: .infinity, alignment: .top)
         }
-    }
 }
 
 #Preview {
-    Login()
-        .environmentObject(UserSession())
+    SignUp()
 }

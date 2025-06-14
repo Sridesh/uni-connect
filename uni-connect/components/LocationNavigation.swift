@@ -31,6 +31,7 @@ let floors = [
 
 struct LocationNavigation: View {
     @State private var selectedFloor = ""
+    @State private var imageOpen = false
     
     var onOtherFloor: Instructions {
         selectedFloor != "Second floor" ?
@@ -64,7 +65,23 @@ struct LocationNavigation: View {
                                         Text(item.sub).font(.subheadline).foregroundColor(.secondary)
                                     }
                                 }
-                            }.frame(width:280, alignment: .leading)
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+                            Image("mac")
+                                .resizable()
+                                .frame(width: 50, height:50)
+                                .onTapGesture {
+                                    imageOpen = true
+                                }
+                                .sheet(isPresented: $imageOpen){
+                                    VStack{
+                                        Image("mac")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(maxWidth: .infinity)
+                                            .padding()
+                                    }
+                                }
+                            
                         }
                         Divider()
                     }

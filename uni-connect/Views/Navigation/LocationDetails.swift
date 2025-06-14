@@ -83,10 +83,10 @@ struct LocationDetails: View {
                         
                         Spacer()
                     }
-                    .presentationDetents([.height(550)])
+                    .presentationDetents([.height(550), .large])
                     .presentationDragIndicator(.visible)
                 }
-                .navigationTitle("View Map")
+                .navigationTitle("Location Details")
                 .navigationBarTitleDisplayMode(.inline)
     }
 }
